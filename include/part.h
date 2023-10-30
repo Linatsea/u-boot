@@ -52,6 +52,9 @@ struct block_drvr {
 #define PART_TYPE_LEN 32
 #define MAX_SEARCH_PARTITIONS 64
 
+#define PART_BOOTABLE			((int)BIT(0))
+#define PART_EFI_SYSTEM_PARTITION	((int)BIT(1))
+
 typedef struct disk_partition {
 	lbaint_t	start;	/* # of first block in partition	*/
 	lbaint_t	size;	/* number of blocks in partition	*/
@@ -96,6 +99,9 @@ struct blk_desc *blk_get_dev(const char *ifname, int dev);
 struct blk_desc *mg_disk_get_dev(int dev);
 struct blk_desc *sata_get_dev(int dev);
 int host_get_dev_err(int dev, struct blk_desc **blk_devp);
+
+int part_get_info_by_type(struct blk_desc *dev_desc, int part, int part_type,
+			  struct disk_partition *info);
 
 /* disk/part.c */
 int part_get_info(struct blk_desc *dev_desc, int part, disk_partition_t *info);

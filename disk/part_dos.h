@@ -17,6 +17,12 @@
 #define DOS_MBR	0
 #define DOS_PBR	1
 
+#define DOS_PART_TYPE_EXTENDED		0x05
+#define DOS_PART_TYPE_EXTENDED_LBA	0x0F
+#define DOS_PART_TYPE_EXTENDED_LINUX	0x85
+
+#define DOS_PART_DEFAULT_GAP		2048
+
 typedef struct dos_partition {
 	unsigned char boot_ind;		/* 0x80 - active			*/
 	unsigned char head;		/* starting head			*/
@@ -29,5 +35,8 @@ typedef struct dos_partition {
 	unsigned char start4[4];	/* starting sector counting from 0	*/
 	unsigned char size4[4];		/* nr of sectors in partition		*/
 } dos_partition_t;
+
+int write_mbr_partitions(struct blk_desc *dev,
+		struct disk_partition *p, int count, unsigned int disksig);
 
 #endif	/* _DISK_PART_DOS_H */

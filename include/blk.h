@@ -20,6 +20,11 @@ typedef ulong lbaint_t;
 #define LBAF "%" LBAFlength "x"
 #define LBAFU "%" LBAFlength "u"
 
+static inline bool blk_enabled(void)
+{
+	return CONFIG_IS_ENABLED(BLK) || IS_ENABLED(CONFIG_SPL_LEGACY_BLOCK);
+}
+
 /* Interface types: */
 enum if_type {
 	IF_TYPE_UNKNOWN = 0,

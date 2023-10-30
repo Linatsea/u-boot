@@ -50,6 +50,12 @@ unsigned long simple_strtoul(const char *cp, char **endp,
 	return result;
 }
 
+unsigned long dectoul(const char *cp, char **endp)
+{
+	return simple_strtoul(cp, endp, 10);
+}
+
+
 int strict_strtoul(const char *cp, unsigned int base, unsigned long *res)
 {
 	char *tail;
