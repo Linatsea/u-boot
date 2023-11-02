@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+// Copyright (C) 2017 Jagan Teki <jteki@openedev.com>
+
+/dts-v1/;
+
+#include "imx6ull.dtsi"
+
+/ {
+	model = "Ostara";
+	compatible = "nke,imx6ull-ostara", "fsl,imx6ull";
+
+	leds {
+		compatible = "gpio-leds";
+
+		led-0 {
+			label = "ostara:green:user";
+			gpios = <&gpio1 30 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+};
