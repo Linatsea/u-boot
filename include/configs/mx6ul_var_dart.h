@@ -273,12 +273,14 @@
 /* NAND pin conflicts with usdhc2 */
 #ifdef CONFIG_CMD_NAND
 #define CONFIG_SYS_FSL_USDHC_NUM	1
+#define CONFIG_SYS_MMC_ENV_DEV		0
 #else
 #define CONFIG_SYS_FSL_USDHC_NUM	2
+#define CONFIG_SYS_MMC_ENV_DEV		1
 #endif
 #endif
 
-#define CONFIG_SYS_MMC_ENV_DEV		0   	/* USDHC1 */
+
 #define CONFIG_SYS_MMC_ENV_PART		0	/* user area */
 
 #if defined(CONFIG_ENV_IS_IN_MMC)
