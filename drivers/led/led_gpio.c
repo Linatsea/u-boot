@@ -106,6 +106,11 @@ static int led_gpio_bind(struct udevice *parent)
 			return ret;
 		uc_plat = dev_get_uclass_platdata(dev);
 		uc_plat->label = label;
+
+		/* HACK, in this uboot version, probe routine is not called for this driver */
+		led_gpio_probe(dev);
+		uclass_post_probe_device(dev);
+
 	}
 
 	return 0;

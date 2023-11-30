@@ -8,6 +8,17 @@
 #ifndef __LED_H
 #define __LED_H
 
+enum led_state_t {
+	LEDST_OFF = 0,
+	LEDST_ON = 1,
+	LEDST_TOGGLE,
+#ifdef CONFIG_LED_BLINK
+	LEDST_BLINK,
+#endif
+
+	LEDST_COUNT,
+};
+
 /**
  * struct led_uc_plat - Platform data the uclass stores about each device
  *
@@ -15,6 +26,7 @@
  */
 struct led_uc_plat {
 	const char *label;
+	enum led_state_t default_state;
 };
 
 /**
@@ -26,16 +38,6 @@ struct led_uc_priv {
 	int period_ms;
 };
 
-enum led_state_t {
-	LEDST_OFF = 0,
-	LEDST_ON = 1,
-	LEDST_TOGGLE,
-#ifdef CONFIG_LED_BLINK
-	LEDST_BLINK,
-#endif
-
-	LEDST_COUNT,
-};
 
 struct led_ops {
 	/**

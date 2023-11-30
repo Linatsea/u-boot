@@ -64,8 +64,47 @@ int led_set_period(struct udevice *dev, int period_ms)
 }
 #endif
 
+static int led_post_bind(struct udevice *dev)
+{
+	struct led_uc_plat *uc_plat = dev_get_uclass_platdata(dev);
+	const char *default_state;
+
+	uc_plat->label = dev_read_string(dev, "label");
+	if (!uc_plat->label)
+		uc_plat->label = ofnode_get_name(dev_ofnode(dev));
+
+	uc_plat->default_state = LEDST_COUNT;
+
+	default_state = dev_read_string(dev, "default-state");
+	if (!default_state)
+		return 0;
+
+	if (!strncmp(default_state, "on", 2))
+		uc_plat->default_state = LEDST_ON;
+	else if (!strncmp(default_state, "off", 3))
+		uc_plat->default_state = LEDST_OFF;
+	else
+		return 0;
+
+	return 0;
+}
+
+static int led_post_probe(struct udevice *dev)
+{
+	struct led_uc_plat *uc_plat = dev_get_uclass_platdata(dev);
+
+	if (uc_plat->default_state == LEDST_ON ||
+	    uc_plat->default_state == LEDST_OFF)
+		led_set_state(dev, uc_plat->default_state);
+
+	return 0;
+}
+
 UCLASS_DRIVER(led) = {
 	.id		= UCLASS_LED,
 	.name		= "led",
 	.per_device_platdata_auto_alloc_size = sizeof(struct led_uc_plat),
+	.post_bind = led_post_bind,
+	.post_probe = led_post_probe
 };
+
