@@ -15,7 +15,13 @@
 		led-0 {
 			label = "ostara:green:user";
 			gpios = <&gpio1 30 GPIO_ACTIVE_HIGH>;
+			default-state = "on";
+		};
+
+		buzzer {
+			label = "ostara:buzzer";
+			gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
 		};
 	};
-
 };
